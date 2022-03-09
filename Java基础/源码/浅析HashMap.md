@@ -17,7 +17,7 @@ HashMap是我们很常用的集合框架，对它的用法我们都很熟悉。�
 
 #### JDK1.7中的HashMap的存储结构
 
-在JDk1.7中或者之前的一些版本中，HashMap的底层存储结构都是采用“数组+链表”的形式。数组的每一节被称为桶（bucket），每个bucket存储这一个或多个entry（Map中的每一个键值对），如果有冲突，冲突的地方开一个链表，链式存储这些entry，所以性能差的HashMap最终会退化成一个链表。其中Entry的结构如下：
+在JDk1.7中或者之前的一些版本中，HashMap的底层存储结构都是采用“数组+链表”的形式。数组的每一节被称为桶（bucket），每个bucket存储这一个或多个entry（Map中的每一个键值对），如果有冲突，冲突的地方开一个链表，链式存储这些entry，所以性能最差的HashMap最终会退化成一个链表。其中Entry的结构如下：
 
 ```java
 static class Entry<K,V> implements Map.Entry<K,V> {
@@ -41,7 +41,7 @@ key,value存储相应的值，next指向bucket中下一个entry。
 
 JDK1.7中HashMap的存储结构大致可表述为下图：
 
-{% asset_img JDK1.7中HashMap的存储结构.png JDK1.7中HashMap的存储结构 %}
+<img src="https://yusheng-picgo.oss-cn-beijing.aliyuncs.com/picgo/JDK1.7中HashMap存储结构.png" alt="JDK1.7中HashMap存储结构" style="zoom: 67%;" />
 
 table数组中的索引通过key的hashCode再取模获得。获取hashCode的hash算法如下(对hashCode进行rehash--高位参与运算，尽量减少冲突)：
 
@@ -54,9 +54,7 @@ final int hash(Object k) {
 
     h ^= k.hashCode();
 
-    // This function ensures that hashCodes that differ only by
-    // constant multiples at each bit position have a bounded
-    // number of collisions (approximately 8 at default load factor).
+    // This function ensures that hashCodes that differ only by constant multiples at each bit position have a bounded number of collisions (approximately 8 at default load factor).
     h ^= (h >>> 20) ^ (h >>> 12);
     return h ^ (h >>> 7) ^ (h >>> 4);
 }
@@ -122,7 +120,7 @@ void resize(int newCapacity) {
 }
 ```
 
-扩容时会新建一个原先数组两倍的新数组，将原先数组的数据重新hash到新的数组，如果原先数组的某个bucket是链表，并且重新hash的位置仍然相同，则链表顺序会反转。rehash后重设table引用和threshold的值。源码如下：
+扩容时会新建一个原先数组两倍的新数组，将原先数组的数据重新hash到新的数组，如果原先数组的某个bucket是链表，并且重新hash的位置仍然相同，则链表顺序会反转（因为采用的是头插法）。rehash后重设table引用和threshold的值。源码如下：
 
 ```java
 /**
@@ -313,7 +311,7 @@ static class Node<K,V> implements Map.Entry<K,V> {
 
 HashMap的存储结构可表述如下：
 
-{% asset_img JDK1.7中HashMap的存储结构.png JDK1.7中HashMap的存储结构 %}
+<img src="https://yusheng-picgo.oss-cn-beijing.aliyuncs.com/picgo/JDK1.8中HashMap存储结构.png" alt="JDK1.8中HashMap存储结构" style="zoom:67%;" />
 
 #### 扩容
 
@@ -496,6 +494,171 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
     }
 ```
 
+###### remove方法
+
+remove方法也加入了红黑树的逻辑，当冲突节点数小于6，会再退化成链表
+
+```java
+public V remove(Object key) {
+        Node<K,V> e;
+        return (e = removeNode(hash(key), key, null, false, true)) == null ?
+            null : e.value;
+    }
+```
+
+```java
+final Node<K,V> removeNode(int hash, Object key, Object value,
+                               boolean matchValue, boolean movable) {
+        Node<K,V>[] tab; Node<K,V> p; int n, index;
+        if ((tab = table) != null && (n = tab.length) > 0 &&
+            (p = tab[index = (n - 1) & hash]) != null) {
+            Node<K,V> node = null, e; K k; V v;
+            if (p.hash == hash &&
+                ((k = p.key) == key || (key != null && key.equals(k))))
+                node = p;
+            else if ((e = p.next) != null) {
+                if (p instanceof TreeNode)
+                    node = ((TreeNode<K,V>)p).getTreeNode(hash, key);
+                else {
+                    do {
+                        if (e.hash == hash &&
+                            ((k = e.key) == key ||
+                             (key != null && key.equals(k)))) {
+                            node = e;
+                            break;
+                        }
+                        p = e;
+                    } while ((e = e.next) != null);
+                }
+            }
+            if (node != null && (!matchValue || (v = node.value) == value ||
+                                 (value != null && value.equals(v)))) {
+                if (node instanceof TreeNode)
+                    ((TreeNode<K,V>)node).removeTreeNode(this, tab, movable);
+                else if (node == p)
+                    tab[index] = node.next;
+                else
+                    p.next = node.next;
+                ++modCount;
+                --size;
+                afterNodeRemoval(node);
+                return node;
+            }
+        }
+        return null;
+    }
+```
+
+```java
+/**
+         * Removes the given node, that must be present before this call.
+         * This is messier than typical red-black deletion code because we
+         * cannot swap the contents of an interior node with a leaf
+         * successor that is pinned by "next" pointers that are accessible
+         * independently during traversal. So instead we swap the tree
+         * linkages. If the current tree appears to have too few nodes,
+         * the bin is converted back to a plain bin. (The test triggers
+         * somewhere between 2 and 6 nodes, depending on tree structure).
+         */
+        final void removeTreeNode(HashMap<K,V> map, Node<K,V>[] tab,
+                                  boolean movable) {
+            int n;
+            if (tab == null || (n = tab.length) == 0)
+                return;
+            int index = (n - 1) & hash;
+            TreeNode<K,V> first = (TreeNode<K,V>)tab[index], root = first, rl;
+            TreeNode<K,V> succ = (TreeNode<K,V>)next, pred = prev;
+            if (pred == null)
+                tab[index] = first = succ;
+            else
+                pred.next = succ;
+            if (succ != null)
+                succ.prev = pred;
+            if (first == null)
+                return;
+            if (root.parent != null)
+                root = root.root();
+            if (root == null
+                || (movable
+                    && (root.right == null
+                        || (rl = root.left) == null
+                        || rl.left == null))) {
+                tab[index] = first.untreeify(map);  // too small
+                return;
+            }
+            TreeNode<K,V> p = this, pl = left, pr = right, replacement;
+            if (pl != null && pr != null) {
+                TreeNode<K,V> s = pr, sl;
+                while ((sl = s.left) != null) // find successor
+                    s = sl;
+                boolean c = s.red; s.red = p.red; p.red = c; // swap colors
+                TreeNode<K,V> sr = s.right;
+                TreeNode<K,V> pp = p.parent;
+                if (s == pr) { // p was s's direct parent
+                    p.parent = s;
+                    s.right = p;
+                }
+                else {
+                    TreeNode<K,V> sp = s.parent;
+                    if ((p.parent = sp) != null) {
+                        if (s == sp.left)
+                            sp.left = p;
+                        else
+                            sp.right = p;
+                    }
+                    if ((s.right = pr) != null)
+                        pr.parent = s;
+                }
+                p.left = null;
+                if ((p.right = sr) != null)
+                    sr.parent = p;
+                if ((s.left = pl) != null)
+                    pl.parent = s;
+                if ((s.parent = pp) == null)
+                    root = s;
+                else if (p == pp.left)
+                    pp.left = s;
+                else
+                    pp.right = s;
+                if (sr != null)
+                    replacement = sr;
+                else
+                    replacement = p;
+            }
+            else if (pl != null)
+                replacement = pl;
+            else if (pr != null)
+                replacement = pr;
+            else
+                replacement = p;
+            if (replacement != p) {
+                TreeNode<K,V> pp = replacement.parent = p.parent;
+                if (pp == null)
+                    root = replacement;
+                else if (p == pp.left)
+                    pp.left = replacement;
+                else
+                    pp.right = replacement;
+                p.left = p.right = p.parent = null;
+            }
+
+            TreeNode<K,V> r = p.red ? root : balanceDeletion(root, replacement);
+
+            if (replacement == p) {  // detach
+                TreeNode<K,V> pp = p.parent;
+                p.parent = null;
+                if (pp != null) {
+                    if (p == pp.left)
+                        pp.left = null;
+                    else if (p == pp.right)
+                        pp.right = null;
+                }
+            }
+            if (movable)
+                moveRootToFront(tab, r);
+        }
+```
+
 ### 结束语
 
-HashMap可以说是是使用最频繁的一个集合之一，了解它的底层实现有助于我们更好的使用它，在map中的数据很大的情况下，恰当的使用可能比不当的使用具有很大的性能提升。本博客是笔者通过研读JDk中的源码和翻看相关的博客和书籍整合而成。受笔者自身水平限制，可能会有些错谬之处，读者不可全信，当多查询相关资料或者自己阅读源码验证一下。最后，如有不当之处，敬请斧正。
+HashMap可以说是是使用最频繁的一个容器之一，了解它的底层实现有助于我们更好的使用它，在map中的数据很大的情况下，恰当的使用可能比不当的使用具有很大的性能提升。本博客是笔者通过研读JDk中的源码和翻看相关的博客和书籍整合而成。受笔者自身水平限制，可能会有些错谬之处，读者不可全信，当多查询相关资料或者自己阅读源码验证一下。最后，如有不当之处，敬请斧正。

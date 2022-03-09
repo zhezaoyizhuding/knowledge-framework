@@ -41,7 +41,7 @@ public ThreadPoolExecutor(int corePoolSize,
 
 下面介绍一下各个参数的含义：
 
-- corePoolSize：核心线程池大小。在线程池被创建后，池里是没有线程的，只有当有任务进来时才会创建线程去执行任务（当然也可以调用prestartAllCoreThreads或者prestartAllCoreThreads去预先创建线程）。而核心线程大小表示当池中线程少于这个值时，每有任务进来，都会创建一个新的线程去执行它；当线程数量等于或者大于这个值时，即池里没有空闲线程，此时会把任务暂存在任务队列中。此外，核心线程也表示池中常驻的线程，即当没有需要执行的任务时，这些线程不会被清除。（当然你也可以设置allowCoreThreadTimeOut(true)使核心线程在超出keepAliveTime后被清除，默认是false）
+- corePoolSize：核心线程池大小。在线程池被创建后，池里是没有线程的，只有当有任务进来时才会创建线程去执行任务（当然也可以调用prestartCoreThread或者prestartAllCoreThreads去预先创建线程）。而核心线程大小表示当池中线程少于这个值时，每有任务进来，都会创建一个新的线程去执行它；当线程数量等于或者大于这个值时，即池里没有空闲线程，此时会把任务暂存在任务队列中。此外，核心线程也表示池中常驻的线程，即当没有需要执行的任务时，这些线程不会被清除。（当然你也可以设置allowCoreThreadTimeOut(true)使核心线程在超出keepAliveTime后被清除，默认是false）
 - maxinumPoolSize：池中存在的最大线程数量。当核心线程都在忙碌，并且任务队列也已经满时；此时，再有新的任务进来，线程池就会临时创建线程去执行这个任务。
 - keepAliveTime：线程的保活时间，默认只有当池中线程数量超出核心线程数时该参数才会起作用，即默认该参数只对超出核心线程数目的线程起作用。
 - unit：时间单位，会转换为纳秒
@@ -54,7 +54,7 @@ public ThreadPoolExecutor(int corePoolSize,
 - corePoolSize不能小于0；maximumPoolSize不能小于0，且maximumPoolSize必须大于corePoolSize；keepAliveTime不能小于0
 - workQueue，threadFactory，handler不能同时为null。
 
-可以看到这个构造函数中还有一个acc变量，据注释的说明，这个一个会在调用finalizer时使用的上下文对象。
+可以看到这个构造函数中还有一个acc变量，据注释的说明，这是一个会在调用finalizer时使用的上下文对象。
 
 除开上面四个参数，后面三个参数都是可选的对象，这里我们再仔细介绍下这三个参数都有哪些选择。
 
@@ -512,4 +512,4 @@ final void runWorker(Worker w) {
 
 ### 总结
 
-ThreadPoolExecutor的源码就介绍到这里，由于笔者水平有限，有些地方笔者也没有完成搞清楚，但大致流程倒是理通了。其中不明之处笔者可以自行查证，到时希望在评论里留言一二，告知笔者，这里万分感谢了。这是笔者Executor源码分析的第三篇，后续笔者会继续介绍Executor中其他的成员。
+ThreadPoolExecutor的源码就介绍到这里，由于笔者水平有限，有些地方笔者也没有完成搞清楚，但大致流程倒是理通了。其中不明之处读者可以自行查证，到时希望在评论里留言一二，告知笔者，这里万分感谢了。这是笔者Executor源码分析的第三篇，后续笔者会继续介绍Executor中其他的成员。

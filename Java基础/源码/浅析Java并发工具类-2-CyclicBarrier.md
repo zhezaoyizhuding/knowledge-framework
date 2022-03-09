@@ -79,7 +79,7 @@ CyclicBarrier主要有上面这些成员变量，我们通过注释和猜测大�
 
 我们可以看到构造函数中主要是对三个变量parties，count，barrierCommand的赋值，barrierCommand可以传入一个Runnable也可以传null；而parties和count的初始值相等。
 
-介绍完成员变量和构造函数，我们来看一下CyclicBarrier的主要运行逻辑。CyclicBarrier对外发布的最主要的方法是下面两个：
+介绍完成员变量和构造函数，我们来看一下CyclicBarrier的主要运行逻辑。CyclicBarrier对外发布的主要方法是下面两个：
 
 ```java
     public int await() throws InterruptedException, BrokenBarrierException {
@@ -174,7 +174,7 @@ CyclicBarrier主要有上面这些成员变量，我们通过注释和猜测大�
     }
 ```
 
-可以看到为了保证线程安全，它首先加了一把锁，而这个锁就是前面介绍的成员变量lock所指向的对象。然后获得了generation的引用，标明下面有一波操作要开始了，首先校验broken是否为true，如果为true，表示屏障已经破了，下面的逻辑的就没必要在运行了，抛出BrokenBarrierException。但默认broken是false的，所以第一个线程进来时不会走这条路劲。我们继续往下看，它又校验了当前线程是否被中断了，如果被中断了调用breakBarrier方法，并抛出InterruptedException。我们来看一下breakBarrier方法，它的源码如下：
+可以看到为了保证线程安全，它首先加了一把锁，而这个锁就是前面介绍的成员变量lock所指向的对象。然后获得了generation的引用，标明下面有一波操作要开始了，首先校验broken是否为true，如果为true，表示屏障已经破了，下面的逻辑的就没必要在运行了，抛出BrokenBarrierException。但默认broken是false的，所以第一个线程进来时不会走这条路径。我们继续往下看，它又校验了当前线程是否被中断了，如果被中断了调用breakBarrier方法，并抛出InterruptedException。我们来看一下breakBarrier方法，它的源码如下：
 
 ```java
     /**

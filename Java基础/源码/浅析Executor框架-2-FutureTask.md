@@ -38,7 +38,7 @@ FutureTask继承于Future，一直到JDK1.8它都是Future的主要实现类，�
      * NEW -> CANCELLED
      * NEW -> INTERRUPTING -> INTERRUPTED
      */
-    // 任务运行的状态，主要有以下其中
+    // 任务运行的状态，主要有以下几种
     private volatile int state;
     private static final int NEW          = 0;
     private static final int COMPLETING   = 1;
@@ -208,7 +208,7 @@ FutureTask继承于Future，一直到JDK1.8它都是Future的主要实现类，�
     }
 ```
 
-可以看到这方法只是判断任务是否正常执行，如果是，返回结果；如果不是，抛出异常。
+可以看到这方法只是判断任务是否正常执行完成，如果是，返回结果；如果不是，抛出异常。
 
 读者根据上面的注释大致可以明白get方法的执行流程，但细心的读者可能会疑惑一个问题，上面的无论是awaitDone方法，还是report方法都是对成员变量的读，那么写是在哪里呢？FutureTask是在哪里给state赋予不同的状态，并将任务结果赋值给outcome的？毕竟在我们使用Future的过程，我们只要调用get方法就能获取到任务的执行结果了，上面的代码流程似乎也没有涉及state和outcome的改变，最让人疑惑的是FutureTask中也没有发布对这些改变的公有方法。
 

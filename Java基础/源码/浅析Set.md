@@ -14,7 +14,7 @@ Set是java集合框架的重要成员之一，常见的有HashSet，LinkedHashSe
 
 Set是一个不允许重复的集合框架，很多书籍会把它形容成一个罐子。你可以把数据放入罐中，但是当你再想把它取出来时，你就无从下手；只能将所有数据倒出，一个个分辨。也就说你无法随机访问Set中的数据，那么相同的重复数据便没有意义，因为你无法分辨他们，对Set而言他们是完全相同的。下面看一下Set家族的继承结构：
 
-{% asset_img Set继承结构.png Set继承结构 %}
+![Set继承结构](https://yusheng-picgo.oss-cn-beijing.aliyuncs.com/picgo/Set继承结构.png)
 
 可以看到主要的几个实现类都实现了set接口，并且继承了AbstractSet抽象类。AbstractSet这个抽象类中除了实现了基本的equals，hashCode方法，还有一个removeAll方法，它的源码如下：
 
@@ -38,7 +38,7 @@ public boolean removeAll(Collection<?> c) {
     }
 ```
 
-这个方法也没什么说，它根据传入的集合的大小分成了两种情况，分别采用集合自身的remove方法和当前集合所用的迭代器的方法来循环删除集合的元素。而无论是集合自身的remove方法还是Iterator的具体实现类，都是由AbstractSet的子类决定的。比如在HashSet中它的Iterator就是HashMap中的KeyIterator。
+这个方法也没什么说的，它根据传入的集合的大小分成了两种情况，分别采用集合自身的remove方法和当前集合所用的迭代器的方法来循环删除集合的元素。而无论是集合自身的remove方法还是Iterator的具体实现类，都是由AbstractSet的子类决定的。比如在HashSet中它的Iterator就是HashMap中的KeyIterator。
 
 ### HashSet
 
@@ -69,11 +69,11 @@ public boolean add(E e) {
 
 我们看见add方法只有一行，就是对HashMap的put方法的返回做了个判空操作。那put方法返回什么呢？map的put方法返回的是在put操作时，value中已经存在的旧值，如果是之前没有值，那就是null。所以我们想象一下这样的场景，当HashSet第一次add时。因为这个key之前没有值，就是null，所以add方法返回true；但是当不是首次add时，此时key对应的value已经存在了一个值PRESENT，后面的所有add操作都是在PRESENT的值之间的替换，永远返回一个Object。所以add的返回值一直是false。但事实上它的操作和true时没有区别。
 
-HashSet这里只介绍一些add方法，其他的一些方法也都是委托给HashMap的相应方法来操作的，笔者这里就不赘述了，想了解的同学可以去看看笔者的另一篇关于HashMap的博客。
+HashSet这里只介绍一下add方法，其他的一些方法也都是委托给HashMap的相应方法来操作的，笔者这里就不赘述了，想了解的同学可以去看看笔者的另一篇关于HashMap的博客。
 
 ### LinkedHashSet
 
-LinkedHashSet继承与HashSet，它的底层操作是委托给LinkedHashMap运作的。我们在看LinkedHashSet的源码时可能只能看到几个构造函数，而所有的构造函数都调用了一个父类的构造函数。这个构造函数的源码如下：
+LinkedHashSet继承于HashSet，它的底层操作是委托给LinkedHashMap运作的。我们在看LinkedHashSet的源码时可能只能看到几个构造函数，而所有的构造函数都调用了一个父类的构造函数。这个构造函数的源码如下：
 
 ```java
 HashSet(int initialCapacity, float loadFactor, boolean dummy) {
@@ -81,7 +81,7 @@ HashSet(int initialCapacity, float loadFactor, boolean dummy) {
 }
 ```
 
-这个构造函数虽然是放在HashSet中，但它是包级权限的，而且在HashSet的几个公有的构造方法中并没有调用它，它应该是专门提供给LinkedHashSet使用的。从源码种我们看到这里给map引用指定了一个LinkedHashMap的实体，后面所有使用map的操作都是在LinkedHashMap中操作。
+这个构造函数虽然是放在HashSet中，但它是包级权限的，而且在HashSet的几个公有的构造方法中并没有调用它，它应该是专门提供给LinkedHashSet使用的。从源码中我们看到这里给map引用指定了一个LinkedHashMap的实体，后面所有使用map的操作都是在LinkedHashMap中操作。
 
 LinkedHashSet的基本操作方法都是继承自HashSet，只是替换了里面的map实体。这里就不介绍了，感兴趣的同学可以看下笔者的一篇关于LinkedHashMap的博客。
 

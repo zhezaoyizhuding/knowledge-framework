@@ -23,7 +23,7 @@ List是我们工作中用的最多的集合框架之一，这片博客简单介�
 
 下面我们来看一下ArrayList的继承结构，下面是通过IDEA中Diagram工具生成的继承结构图：
 
-{% asset_img ArrayList继承结构图.png ArrayList继承结构图 %}
+<img src="https://yusheng-picgo.oss-cn-beijing.aliyuncs.com/picgo/ArrayList继承结构图.png" alt="ArrayList继承结构图" style="zoom:50%;" />
 
 可以看到它继承了AbstractList，实现了List以获取List的相应操作；并实现了RandomAccess，Cloneable，Serializable接口，这些接口都是 一些标志性接口，JDK中存在一些标志性接口，它们仅仅用于标记它们的实现类具备某项功能，而不会附加一些必须实现的操作。比如上面这三个接口就标明ArrayList是可随机存取的，可被克隆（JDK的一般都是浅拷贝）的，并且可被序列化的。很多框架在某些类进行某项操作之前会检查她是否具备相应功能，比如在之前古老的java web中，我们的model类，如果要在网络中传输，我们就需要它实现Serializable接口，否则将抛出异常。
 
@@ -253,7 +253,7 @@ LinkedList是List的另一个实现，底层采用的是一个双端链表。在
 
 我们先看看它的继承结构图，如下：
 
-{% asset_img LinkedList继承结构图.png LinkedList继承结构图 %}
+<img src="https://yusheng-picgo.oss-cn-beijing.aliyuncs.com/picgo/LinkedList继承结构图.png" alt="LinkedList继承结构图" style="zoom:50%;" />
 
 与ArrayList不同的是它实现了Deque，这是一个双端队列接口，赋予了LinkedList双端队列的一些功能；还有个不同处是它继承了AbstractSequentialList而不是AbstractList，当然AbstractSequentialList其实就是AbstractList的子类，但是它装饰了更多的功能。
 
@@ -418,7 +418,7 @@ Vector的实现与ArrayList很像，事实上ArrayList就是用于在单线程�
 
 ### ConcurrentModificationException问题
 
-再java集合的迭代中如果使用不当可能会出现ConcurrentModificationException，看名字我们可能觉得它是并发修改异常，事实上在单线程环境也可能出现这个问题，当然在多线程环境中更可能出现。但是在多线程环境我们就不该使用这些集合因为它们本来就是线程不安全，我们应该使用concurrent包下的相应集合类来替换它。下面我们来看一下在单线程环境中为什么会出现这个问题。
+在java集合的循环遍历中如果使用不当可能会出现ConcurrentModificationException，看名字我们可能觉得它是并发修改异常，事实上在单线程环境也可能出现这个问题，当然在多线程环境中更可能出现。但是在多线程环境我们就不该使用这些集合因为它们本来就是线程不安全，我们应该使用concurrent包下的相应集合类来替换它。下面我们来看一下在单线程环境中为什么会出现这个问题。
 
 通过迭代器对集合进行遍历或者使用foreach循环，如while (iterator.hasNext())或者for (String string : strings)实际上都是java集合中的迭代器实现。后者是一种语法糖，在通过javac编译解析后本质上还是迭代器，而迭代器迭代集合时会调用下面这个方法。
 
@@ -477,7 +477,7 @@ public void remove() {
         }
 ```
 
-可以看到这个方法中在remove之后重新矫正了expectedModCount的值，是的它们满足相等。
+可以看到这个方法中在remove之后重新矫正了expectedModCount的值，使得它们满足相等。
 
 
 

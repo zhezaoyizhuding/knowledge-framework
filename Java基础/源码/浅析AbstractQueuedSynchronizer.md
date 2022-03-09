@@ -252,7 +252,7 @@ static final class Node {
 
 内部两个队列的结构如下：
 
-{% asset_img AQS内部存储结构图.png AQS内部存储结构图 %}
+<img src="https://yusheng-picgo.oss-cn-beijing.aliyuncs.com/picgo/AQS内部存储结构图.png" alt="AQS内部存储结构图" style="zoom:30%;" />
 
 可以看到存在两个相连的队列，上面的是同步队列，下面的是等待队列；AQS会持有两个引用，head和tail分别指向同步队列的首节点和尾节点。等待队列其实是从一个condition对象延伸的，AQS持有condition对象的引用，condition对象中存在一个firstWaiter和lastWaiter分别指向等待队列的首节点和尾节点。同步队列和等待队列之间会存在交互，当调用condition.waite时，同步队列的首节点释放锁并移动到等待队列的尾节点在此等待，当调用condition.singal时，等待队列的首节点就会被移动到同步队列中重新去竞争锁。conditionObject的代码就不粘了，有兴趣的同学可以自己去看看源码。
 

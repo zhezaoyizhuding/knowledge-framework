@@ -128,4 +128,4 @@ class Worker implements Runnable {
 
 ### 总结
 
-CountDownLatch就介绍到这里，事实上在java相关的框架越来越成熟后，CountDownLatch很少有场景需要遇到，在实际需求中，笔者就重来没有遇到过这个东西，但是大神的设计思路我们还是需要学习。笔者下篇博客将介绍另一个和它很像的工具类CyclicBarrier。
+CountDownLatch就介绍到这里，事实上在java相关的框架越来越成熟后，CountDownLatch很少有场景需要遇到，在实际需求中，笔者就从来没有遇到过这个东西，但是大神的设计思路我们还是需要学习。笔者下篇博客将介绍另一个和它很像的工具类CyclicBarrier。
