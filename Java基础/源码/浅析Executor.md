@@ -14,9 +14,9 @@ Executor是JUC包中用于实现异步任务的框架，使用它可以有效降
 
 ### Executor
 
-Executor接口是框架的核心，它下面有 一系列的继承体系，主要实现类有ThreadPoolExecutor和ScheduledThreadPoolExecutor和一个工具类Executors。下面看一下Executor的继承体系，两个实现类的具体实现我们在后续的文章中再详细分析。
+Executor接口是框架的核心，它下面有 一系列的继承体系，主要实现类有ThreadPoolExecutor和ScheduledThreadPoolExecutor，同时还有一个工具类Executors。下面看一下Executor的继承体系，两个实现类的具体实现我们在后续的文章中再详细分析。
 
-{% asset_img Executor继承图.png Executor继承图 %}
+<img src="https://yusheng-picgo.oss-cn-beijing.aliyuncs.com/picgo/Executor继承图.png" alt="Executor继承图" style="zoom:50%;" />
 
 下面我们按照这个继承图依次了解一下它们的源码。先看一下最上层的Executor接口，它的源码如下：
 
@@ -37,7 +37,7 @@ public interface Executor {
 }
 ```
 
-可以看到它内部只有一个待实现的execute方法，用于执行任务。我们也能看到它采用了设计模式中的命令模式，将任务的调用者和处理着解耦分离，我们不需要了解任务是如何执行的，我们只管向里面放入任务即可。Executor有一个子接口ExecutorService提供了更多的功能，下面我们看一下它的源码。
+可以看到它内部只有一个待实现的execute方法，用于执行任务。我们也能看到它采用了设计模式中的命令模式，将任务的调用者和处理者解耦分离，我们不需要了解任务是如何执行的，我们只管向里面放入任务即可。Executor有一个子接口ExecutorService提供了更多的功能，下面我们看一下它的源码。
 
 它提供了如下的接口方法：
 
@@ -120,7 +120,7 @@ public interface Callable<V> {
 
 上面我们介绍了任务的调用者与任务的具体执行者，那么还剩下的一部分就是如何获取任务的执行结果，这样就构成了完整的Executor框架，而获取任务结果就是由Future来完成的，下面看下它的继承结构。
 
-{% asset_img Future继承结构图.png Future继承结构图 %}
+<img src="https://yusheng-picgo.oss-cn-beijing.aliyuncs.com/picgo/Future继承结构图.png" alt="Future继承结构图" style="zoom:50%;" />
 
 下面我们先看看Future接口中有哪些方法，它们的源码如下
 

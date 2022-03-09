@@ -38,7 +38,7 @@ public <T> Future<T> submit(Runnable task, T result) {
     }
 ```
 
-可以看到ScheduledThreadPoolExecutor重写了从ThreadPoolExecutor继承来得这两个方法，并且将它们的工作委托给了一个schedule方法，而ScheduledThreadPoolExecutor中的schedule方法时公有的，我们可以直接使用。事实上大多数程序员也确实更习惯于直接调用schedule方法，而且这两个方法调用的schedule方法只可以实现延迟任务，要想实现周期性的任务必须调用schedule的变种方法。下面看一下schedule的源码。
+可以看到ScheduledThreadPoolExecutor重写了从ThreadPoolExecutor继承来得这两个方法，并且将它们的工作委托给了一个schedule方法，而ScheduledThreadPoolExecutor中的schedule方法是公有的，我们可以直接使用。事实上大多数程序员也确实更习惯于直接调用schedule方法，而且这两个方法调用的schedule方法只可以实现延迟任务，要想实现周期性的任务必须调用schedule的变种方法。下面看一下schedule的源码。
 
 ### 延迟任务
 
@@ -102,7 +102,7 @@ ScheduledFutureTask类的篇幅过长，这里就不在具体介绍了。我们�
             super.getQueue().add(task);
             // 判断池是否关闭，及线程是否可以继续运行，如果不可以，移除并取消任务。
             if (isShutdown() &&
-                // 该方法中，在两种情况下下能继续运行，运行状态，或者关闭状态但是需要设置变量为true。
+                // 该方法中，在两种情况下能继续运行，运行状态，或者关闭状态但是需要设置变量为true。
                 !canRunInCurrentRunState(task.isPeriodic()) &&
                 remove(task))
                 task.cancel(false);
@@ -149,7 +149,7 @@ ScheduledFutureTask类的篇幅过长，这里就不在具体介绍了。我们�
 
 DelayedWorkQueue是一个优先级队列，有点类似于DelayQueue和PriorityQueue的实现。底层存储结构采用的是一个二叉堆数组，保证了最先被执行的任务一直在队列的顶端。在介绍这个队列之前，我们需要先了解一下二叉堆。在维基百科中对二叉堆的定义为：父节点小于任意一个子节点，且每个节点的左子树和右子树也是一个二叉堆。并且二叉堆可以分为大顶堆和小顶堆，显而易见DelayedWorkQueue中的堆是个小顶堆。下面通过几张图看看小顶堆到底是什么样的，以及它的数组表示形式。
 
-{% asset_img 二叉堆节点图.png 二叉堆节点图 %}
+<img src="https://yusheng-picgo.oss-cn-beijing.aliyuncs.com/picgo/二叉堆节点图.png" alt="二叉堆节点图" style="zoom:30%;" />
 
 它的数组结构可表示如下:
 
@@ -397,4 +397,4 @@ ScheduledThreadPoolExecutor便是通过这个值来区分任务类型的。
 
 ### 总结
 
-ScheduledThreadPoolExecutor就介绍到这里了。本文算是笔者边读源码边做的笔记逻辑有些混乱，读者若有不明白之处或者发现错误疏漏之处，可以在评论中留言，或者查询其他资料来解惑。一家之言不可全信，笔者当自行验证之。ßß
+ScheduledThreadPoolExecutor就介绍到这里了。本文算是笔者边读源码边做的笔记逻辑有些混乱，读者若有不明白之处或者发现错误疏漏之处，可以在评论中留言，或者查询其他资料来解惑。一家之言不可全信，读者当自行验证之。

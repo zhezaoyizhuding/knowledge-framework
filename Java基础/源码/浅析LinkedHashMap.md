@@ -10,7 +10,7 @@ tags:
 
 正常情况下HashMap已经足够我们使用了。但在某些场景下，我们可能需要保证数据插入集合的有序性，使得我们在遍历时，数据能按照我们插入时的顺序输出。这种情况下，HashMap就满足不了要求了。JDK对此情况做出了补偿，提供了一个新的集合类LinkedHashMap。该类继承于HashMap，但在底层存储结构上做出些改变，它在table数组（键值对数组）中的数据之间使用一个双向链表来维持数据的有序性。LinkedHashMap的存储结构大致可描述如下：
 
-{% asset_img LinkedHashMap底层存储结构.png LinkedHashMap底层存储结构 %}
+<img src="https://yusheng-picgo.oss-cn-beijing.aliyuncs.com/picgo/LinkedHashMap底层存储结构.png" alt="LinkedHashMap底层存储结构" style="zoom:67%;" />
 
 它的节点结构如下：
 
@@ -77,7 +77,7 @@ public LinkedHashMap(Map<? extends K, ? extends V> m) {
 }
 ```
 
-引入accessOrder其实是为了LRU算法作支持，LinkedHashMap中有一个removeEldestEntry方法，在LinkedHashMap的默认实现中它是返回恒定false的，但是它给予了我们重写的权限。因此我们可以继承LInkedHashMap并重写上面这个方法来实现一个最近最少使用的缓存（比如我们可以指定LinkedHashMap的节点数量，即缓存大小，当达到这个界限时每有新的数据进来，我们就处理掉最老的节点）
+引入accessOrder其实是为了支持LRU算法，LinkedHashMap中有一个removeEldestEntry方法，在LinkedHashMap的默认实现中它是返回恒定false的，但是它给予了我们重写的权限。因此我们可以继承LInkedHashMap并重写上面这个方法来实现一个最近最少使用的缓存（比如我们可以指定LinkedHashMap的节点数量，即缓存大小，当达到这个界限时每有新的数据进来，我们就处理掉最老的节点）
 
 ### LinkedHashMap内部操作逻辑
 

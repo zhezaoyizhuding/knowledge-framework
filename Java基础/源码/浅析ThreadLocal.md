@@ -72,7 +72,7 @@ public ThreadLocal() {
 }
 ```
 
-可以看到这个构造方法是个空方法，只是用于new一个ThreadLocal对象，并没有进行数据的装配和底层存储结构的构造，这点上和HashMap差不多，采用了一种懒加载的方式，只有在真正在使用的时候才进行相关结构的构造。我么都知道ThreadLocal核心的有三个方法set，get，和remove方法，那么它底层结构的初始化应该是在调用这些方法时进行的。我们来看看这些方法的源码。
+可以看到这个构造方法是个空方法，只是用于new一个ThreadLocal对象，并没有进行数据的装配和底层存储结构的构造，这点上和HashMap差不多，采用了一种懒加载的方式，只有在真正在使用的时候才进行相关结构的构造。我们都知道ThreadLocal核心的有三个方法set，get，和remove方法，那么它底层结构的初始化应该是在调用这些方法时进行的。我们来看看这些方法的源码。
 
 ##### set方法
 
@@ -119,7 +119,7 @@ void createMap(Thread t, T firstValue) {
 }
 ```
 
-这里面new了一个ThreadLocalMap对象，并把它付给了当前线程持有的一个threadLocals。那么这个ThreadLocalMap是什么呢？它其实是ThreadLocal的静态内部类，ThreadLocal的数据存储和核心操作都是委托给它来实现的。看到这里或许有些同学会疑惑，既然只是存储变量副本，Set好像也能实现，为什么不用Set而用Map呢？毕竟Map要比Set复杂的多。这里我们就需要明白，这个Map是属于Thread而不是ThreadLocal的（虽然它是ThreadLocal的内部类），一个Thread可以有很多个ThreadLocal来存储多个变量，但它只会有一个ThreadLocalMap。
+这里面new了一个ThreadLocalMap对象，并把它赋给了当前线程持有的一个threadLocals。那么这个ThreadLocalMap是什么呢？它其实是ThreadLocal的静态内部类，ThreadLocal的数据存储和核心操作都是委托给它来实现的。看到这里或许有些同学会疑惑，既然只是存储变量副本，Set好像也能实现，为什么不用Set而用Map呢？毕竟Map要比Set复杂的多。这里我们就需要明白，这个Map是属于Thread而不是ThreadLocal的（虽然它是ThreadLocal的内部类），一个Thread可以有很多个ThreadLocal来存储多个变量，但它只会有一个ThreadLocalMap。
 
 好了，下面我们来看一下上面这个ThreadLocalMap的构造方法里做了些什么。
 
@@ -147,7 +147,7 @@ static class Entry extends WeakReference<ThreadLocal<?>> {
 }
 ```
 
-Entry是ThreadLocalMap的静态内部类，其实就是一个用来封装数据的结构体，类似于map中的桶的概念。这里需要注意的一点是，在这里ThreadLocalMap的key被包裹成了一个弱引用。我们再回到上面的构造方法，可以看到它new了一个数组后，然后对这个key进行了一顿操作，又是hash又是位运算的，这个具体我们下文再说，这里我们只需要知道它最终得到一个索引值作为上面数组的下标，通过这个我们可以索引到具体数据的位置。下面就是new一个Entry方法上面的数据中并初始化size和threshold。这里面size表示数组中entry的数目，threshold表示ThreadLocalMap扩容的阈值，这里面与HashMap不同的是这个阈值并不是table的length，而是length的三分之二，扩容时倒是和HashMap相同，充满在阈值的四分之三时扩容。
+Entry是ThreadLocalMap的静态内部类，其实就是一个用来封装数据的结构体，类似于map中的桶的概念。这里需要注意的一点是，在这里ThreadLocalMap的key被包裹成了一个弱引用。我们再回到上面的构造方法，可以看到它new了一个数组后，然后对这个key进行了一顿操作，又是hash又是取模的，这个具体我们下文再说，这里我们只需要知道它最终得到一个索引值作为上面数组的下标，通过这个我们可以索引到具体数据的位置。下面就是new一个Entry方法上面的数据中并初始化size和threshold。这里面size表示数组中entry的数目，threshold表示ThreadLocalMap扩容的阈值，这里面与HashMap不同的是这个阈值并不是table的length，而是length的三分之二，扩容时倒是和HashMap相同，充满在阈值的四分之三时扩容。
 
 上面这个初始化的问题说完了，下面看看具体的set方法。通过上面的set方法我们知道如果这个ThreadLocalMap没有初始化，调用set方法会先初始化它；如果已经初始化了，再调用set方法会委托给ThreadLocalMap的set方法处理。这个set方法的源码如下：
 
@@ -213,7 +213,7 @@ private final int threadLocalHashCode = nextHashCode();
     }
 ```
 
-我们看到它其实是通过AtomicInteger实现一个原子的递增（其实再底层熟悉AtomicInteger源码的同学应该会知道它其实就是一个CAS操作，至于CAS操作是什么，感兴趣的同学可以看看相关的书籍和博客，我们这里可以把它理解成一个粒度非常小的锁，小到只能保证单个元素），递增的间隔是一个常数0x61c88647，这个数是多少呢？换算成十进制是1640531527。那为什么是这个数呢？笔者为此查了很多博客，并且最终锁定了一篇文章[Why 0x61c88647?](https://www.javaspecialists.eu/archive/Issue164.html)。这是个老外写的文章，笔者读了之后得出了结论---英语真的难读。言归正传，期间说到了这个数，作者把它称作golden number，这翻译叫黄金数是吧？看到这笔者当时就发散了思维，黄金分割点、黄金比例身材、章子怡....汪峰那个老王八蛋。好吧，又扯远了。在这篇文章中作者说道了选这个数的原因，为了保证数据的跳跃分布。因为用hash就会存在冲突，这个数保证在冲突时它的下一个槽位存在数据的可能性更低（下文我们会看到这个map处理冲突的方法是一种线性检测的方式）。那它是如何保证数据跳跃分布的呢？上面的set方法中我们可以看到它取索引的计算方式是key.threadLocalHashCode & (len-1)，即是这个数与entry数组的长度减一做按位与运算，而数组的长度是2的N次方（初始值是16，并且扩容时是2倍扩容），细心的同学应该已经发现了，这样的话，这个运算的值其实就是取threadLocalHashCode的低N位（也相当于对len取模，但位运算的效率更高）。最后得到的结果是连续set的两个数之间间距为7，并且均匀分布。下面是我用python做的一个实验。
+我们看到它其实是通过AtomicInteger实现一个原子的递增（其实熟悉AtomicInteger源码的同学应该会知道它其实就是一个CAS操作，至于CAS操作是什么，感兴趣的同学可以看看相关的书籍和博客，我们这里可以把它理解成一个粒度非常小的锁，小到只能保证单个元素），递增的间隔是一个常数0x61c88647，这个数是多少呢？换算成十进制是1640531527。那为什么是这个数呢？笔者为此查了很多博客，并且最终锁定了一篇文章[Why 0x61c88647?](https://www.javaspecialists.eu/archive/Issue164.html)。这是个老外写的文章，笔者读了之后得出了结论---英语真的难读。言归正传，期间说到了这个数，作者把它称作golden number，这翻译叫黄金数是吧？看到这笔者当时就发散了思维，黄金分割点、黄金比例身材、章子怡....汪峰那个老王八蛋。好吧，又扯远了。在这篇文章中作者说道了选这个数的原因，为了保证数据的跳跃分布。因为用hash就会存在冲突，这个数保证在冲突时它的下一个槽位存在数据的可能性更低（下文我们会看到这个map处理冲突的方法是一种线性检测的方式）。那它是如何保证数据跳跃分布的呢？上面的set方法中我们可以看到它取索引的计算方式是key.threadLocalHashCode & (len-1)，即是这个数与entry数组的长度减一做按位与运算，而数组的长度是2的N次方（初始值是16，并且扩容时是2倍扩容），细心的同学应该已经发现了，这样的话，这个运算的值其实就是取threadLocalHashCode的低N位（也相当于对len取模，但位运算的效率更高）。最后得到的结果是连续set的两个数之间间距为7，并且均匀分布。下面是我用python做的一个实验。
 
 ```python
 >>> HASH_INCREMENT = 0x6188647
@@ -233,7 +233,7 @@ private final int threadLocalHashCode = nextHashCode();
 
 可见结果为从0开始，间距为7，非常均匀。这里我们要知道当第一个线程进来时，它是将数据存储在0这个位置的，因为getAndAdd方式是先get再add，它会先返回默认值0。当然这只是第一个线程，后续线程进来时就不会为0。因为虽然每一个线程都会有自己的ThreadLocalMap，但是对于外部类ThreadLocal是共享的，它的静态成员nextHashCode也是共享的。
 
-继续看上面的set方法，我们来看一下再得到这个索引后，它如何获取具体的value及如何处理冲突的。可以看到下面是一个for循环，在循环中它从这个索引开始向右遍历，熟悉hash的同学应该知道这其实就是解决hash冲突几种方法中开放定址法中的线性探测。如果冲突的话它会一直循环，直到找到一个为null的slot，并在此创建一个新的entry。但是在循环中会遇到两种情况：如果找到了这个key（没有冲突），重写它的value值返回；还有一种情况，我们前面说过这个entry的key是一个弱引用，它可能会被GC给回收，所以如果这个key被GC回收的话为了避免内存泄露，我们需要回收它对应的value值。这里调用了一个replaceStaleEntry方法，我们看看它的内部实现。
+继续看上面的set方法，我们来看一下在得到这个索引后，它如何获取具体的value及如何处理冲突的。可以看到下面是一个for循环，在循环中它从这个索引开始向右遍历，熟悉hash的同学应该知道这其实就是解决hash冲突几种方法中开放定址法中的线性探测。如果冲突的话它会一直循环，直到找到一个为null的slot，并在此创建一个新的entry。但是在循环中会遇到两种情况：如果找到了这个key（没有冲突），重写它的value值返回；还有一种情况，我们前面说过这个entry的key是一个弱引用，它可能会被GC给回收，所以如果这个key被GC回收的话为了避免内存泄露，我们需要回收它对应的value值。这里调用了一个replaceStaleEntry方法，我们看看它的内部实现。
 
 ```java
 private void replaceStaleEntry(ThreadLocal<?> key, Object value,
@@ -295,7 +295,7 @@ private void replaceStaleEntry(ThreadLocal<?> key, Object value,
         }
 ```
 
-这方法有点长，逻辑也有点复杂，通过代码和注释，它其实主要是将找到的这个失效的entry与真正要找的entry替换位置，并且如果一直没找到想要找的entry（key以失效或者根本就不存在），那么就在当前位置重新新建一个key。这个方法有个副作用，就是它会清除沿途遇到的key的null的entry。通过expungeStaleEntry方法和cleanSomeSlots方法，这个具体就不再说了，情形有些多比较复杂。但我们需要明白这个回收是启发式的，它只会在调用set方法，并且遭遇了一个key为null的entry时，才会触发这个回收方法。所以很多前辈都告诫过我们在使用ThreadLocal时要记得调用remove方法。
+这方法有点长，逻辑也有点复杂，通过代码和注释，它其实主要是将找到的这个失效的entry与真正要找的entry替换位置，并且如果一直没找到想要找的entry（key已失效或者根本就不存在），那么就在当前位置重新新建一个key。这个方法有个副作用，就是它会清除沿途遇到的key的null的entry。通过expungeStaleEntry方法和cleanSomeSlots方法，这个具体就不再说了，情形有些多比较复杂。但我们需要明白这个回收是启发式的，它只会在调用set方法，并且遭遇了一个key为null的entry时，才会触发这个回收方法。所以很多前辈都告诫过我们在使用ThreadLocal时要记得调用remove方法。
 
 在上面set方法的最后还有个rehash，如果这个table中不存在key为null的entry并且entry的数目大于threshold时就会触发rehash，rehash方法如下：
 
@@ -463,7 +463,7 @@ private void remove(ThreadLocal<?> key) {
 
 ThreadLocal为什么会在使用不当的情况下会造成内存泄露呢？看了上面的分析我们很容易能想到的一个原因是ThreadLocal自身对entry的回收是启发式的，只有在我们手动调用set或者get方法，并且在遭遇一个无效的entry时才会调用，所以如果不手动调用remove方法还是会造成一定的内存泄露。但这还不是最大的问题，最大的问题是ThreadLocal是和线程对象绑定的，它具有和线程对象一样的生命周期。下面是我在网上找的Thread和ThreadLocal之间的引用链图：
 
-{% asset_img threadlocal.jpg ThreadLocal引用链图 %}
+<img src="https://yusheng-picgo.oss-cn-beijing.aliyuncs.com/picgo/threadlocal.jpg" alt="threadlocal" style="zoom:67%;" />
 
 Thread和entry之间存在一个引用链，因此只要Thread存在，则GC就不会回收Entry，哪怕它的key已经被回收。但是也有人说Thread在执行完毕自动就会被销毁，那么这个map也就会被回收。确实如此，如果Thread被回收了，map也会被回收，而我们如果单起一个线程的话，执行完后，它确实会被销毁。然而，在现实中存在一个叫线程池的技术，而我们为了方便管理和复用更乐意去使用它。而在池中，Thread在使用后是不会被回收的。这就造成了ThreadLocal的内存泄漏。在后端开发中要尤其注意ThreadLocal的使用，因为后台常用的Tomcat容器在处理http请求时采用的就是线程池技术。
 

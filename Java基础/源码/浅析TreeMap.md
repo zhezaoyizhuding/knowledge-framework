@@ -22,7 +22,7 @@ public class TreeMap<K,V>
 
 可见它继承了抽象类AbstractMap，并且实现了接口NavigableMap。AbstractMap这里就不说了，里面定义了Map的一些基本操作，常用的Map基本都继承了这个抽象类。而NavigableMap实现了接口SortedMap，是专门为有序Map服务的。因此TreeMap的继承结构可描述如下：
 
-{% asset_img TreeMap继承体系.jpg TreeMap继承体系 %}
+<img src="https://yusheng-picgo.oss-cn-beijing.aliyuncs.com/picgo/TreeMap继承体系.jpg" alt="TreeMap继承体系" style="zoom:50%;" />
 
 TreeMap有四个构造函数，如下：
 
@@ -58,7 +58,7 @@ public TreeMap(SortedMap<K, ? extends V> m) {
 
 可能第一个和第二个比较常用一些。TreeMap有个成员变量comparator，作为排序时的比较器。第一个构造方法不指定比较器，此时集合中的元素会按照自然顺序排序，并且要求key必须实现Comparable接口。第二个构造函数指定一个外部的比较器，此时集合中的元素会使用这个比较器来排序，因此key不再需要实现Comparable接口。
 
-既然是依托于红黑树实现的，那肯定一个节点类，用来存储数据。TreeMap的节点类也是一个实现了Map.Entry<K,V>的Entry。结构如下：
+既然是依托于红黑树实现的，那肯定有一个节点类，用来存储数据。TreeMap的节点类也是一个实现了Map.Entry<K,V>的Entry。结构如下：
 
 ```java
 static final class Entry<K,V> implements Map.Entry<K,V> {
@@ -226,8 +226,8 @@ public V remove(Object key) {
     }
 ```
 
-从源码看，首先，它会查找这个entry，如果这个entry不存在，就返回空；若存在，删除这个entry，并返回旧值。其实主要操作都在deleteEntry这个方法里，这个方法会删除这个entry并重新平衡红黑石，使之重新符合红黑树的定义。
+从源码看，首先，它会查找这个entry，如果这个entry不存在，就返回空；若存在，删除这个entry，并返回旧值。其实主要操作都在deleteEntry这个方法里，这个方法会删除这个entry并重新平衡红黑树，使之重新符合红黑树的定义。
 
 ### 结束语
 
-TreeMap虽然并不常用，但在某些场景中还是有有一些用武之地的。并且在一些面试中可能也会遇到，因此，还是需要花费一些时间来了解它的内部机制。本文只是做一些简单介绍，浅尝辄止。读者要想更深入的了解，还是需要了解一下红黑树的相关知识。
+TreeMap虽然并不常用，但在某些场景中还是有一些用武之地的。并且在一些面试中可能也会遇到，因此，还是需要花费一些时间来了解它的内部机制。本文只是做一些简单介绍，浅尝辄止。读者要想更深入的了解，还是需要了解一下红黑树的相关知识。
