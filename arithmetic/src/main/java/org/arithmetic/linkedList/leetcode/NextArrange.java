@@ -24,28 +24,35 @@ import java.lang.reflect.Array;
  **/
 public class NextArrange {
     public static void main(String[] args) {
-        int[] nums = {1,3,2};
+        int[] nums = {3,1,4};
         nextPermutation(nums);
+        for(int num : nums) {
+            System.out.print(num);
+        }
     }
     public static void nextPermutation(int[] nums) {
         int low = 0;
         int i = 0;
+        // 第一步，从后往前找到第一个降序序列
         for(i = nums.length - 1; i > 0; i--) {
             if(nums[i] > nums[i - 1]) {
                 low = i - 1;
                 break;
             }
         }
+        // 找不到的情况，即目标值就是最大值
         if(i == 0) {
             reverse(nums,0);
             return;
         }
+        // 第二步，再从目标位置的后面，找到第一个比他大的值，进行交换
         for(int j = nums.length - 1; j > low; j--) {
             if(nums[j] > nums[low]) {
                 swap(nums,j,low);
                 
             }
         }
+        // 第三步，对目标位置的后面序列进行降序
         reverse(nums,low + 1);
     }
     private static void swap(int[] nums, int left, int right) {
@@ -63,4 +70,6 @@ public class NextArrange {
             right --;
         }
     }
+
+
 }
