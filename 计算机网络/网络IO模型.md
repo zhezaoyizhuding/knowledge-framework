@@ -14,7 +14,7 @@ Socket 中文翻译为套接字，是计算机网络中进程间进行双向通�
 - 要想实现网络通信，至少需要一对 Socket，其中一个运行在客户端，称之为 Client Socket；另一个运行在服务器端，称之为 Server Socket。
 - Socket 之间的连接过程可以分为三个步骤：（1）服务器监听；（2）客户端连接；（3）连接确认。
 
-![Socket](https://segmentfault.com/img/remote/1460000039898782)
+<img src="https://yusheng-picgo.oss-cn-beijing.aliyuncs.com/picgo/image-20220925101159842.png" alt="image-20220925101159842" style="zoom:50%;" />
 
 ### 1.2 Socket 缓冲区
 
@@ -23,7 +23,7 @@ Socket 中文翻译为套接字，是计算机网络中进程间进行双向通�
 - 通过 Socket 发送数据并不会立即向网络中传输数据，而是先将数据写入到输出缓冲区中，再由 TCP 协议将数据从输出缓冲区发送到目标主机。
 - 通过 Socket 接收数据也是如此，也是从输入缓冲区中读取数据，而不是直接从网络中读取。
 
-![Socket缓冲区](https://segmentfault.com/img/remote/1460000039898783)
+<img src="https://yusheng-picgo.oss-cn-beijing.aliyuncs.com/picgo/image-20220925101217920.png" alt="image-20220925101217920" style="zoom:50%;" />
 
 ### 1.3 用户空间、内核空间、系统调用
 
@@ -33,7 +33,7 @@ Socket 中文翻译为套接字，是计算机网络中进程间进行双向通�
 - 我们的应用程序运行在用户空间，是不具备系统级的直接操作权限的。如果应用程序想要访问系统核心功能，必须通过系统调用（System Call）来完成。比如调用`recv()`函数，会将输入缓冲区中的内容拷贝到用户缓冲区。
 - 系统调用运行在内核空间，是操作系统为应用程序提供的接口。
 
-![用户空间、内核空间、系统调用](https://segmentfault.com/img/remote/1460000039898784)
+<img src="https://yusheng-picgo.oss-cn-beijing.aliyuncs.com/picgo/image-20220925101244633.png" alt="image-20220925101244633" style="zoom:50%;" />
 
 下面列举了一些 Linux 操作系统中的系统调用接口（部分函数后面章节会用到）：
 
@@ -231,7 +231,7 @@ Server 端包含 1 个 Boss的NioEventLoopGroup 和 1 个 Worker的NioEventLoopG
 
 Proactor 模式整体与Reactor 模式一致，区别就在于Proactor模式将所有I/O操作都交给主线程和内核来处理，工作线程仅仅负责业务逻辑。模型如下：
 
-![img](http://www.cmsblogs.com/images/group/sike-java/sike-nio/nio-20211031100002.jpg)
+<img src="https://yusheng-picgo.oss-cn-beijing.aliyuncs.com/picgo/image-20220925101515066.png" alt="image-20220925101515066" style="zoom:50%;" />
 
 - **Procator Initiator**：负责创建Handler和Procator，并将Procator和Handler都通过Asynchronous operation processor注册到内核。
 - **Handler**：执行业务流程的业务处理器。
