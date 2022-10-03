@@ -1,6 +1,8 @@
 ## 1、概述
 
-JVM调优主要是OOM、fullgc、yanggc的调优。
+JVM调优（也可以直接叫gc调优）主要是OOM、fullgc、yanggc的调优。
+
+![img](https://yusheng-picgo.oss-cn-beijing.aliyuncs.com/picgo/cac9845d64448288663cdee901b2797f312301.png)
 
 ## 2、OOM
 
@@ -42,7 +44,7 @@ java.lang.OutOfMemoryError: Metaspace
 这个地方一般很少溢出，均是操作不当导致的。
 
 - 元空间分配的太少，而java项目又比较大，class放不下。
-- 运行时常量池溢出，JDK之前由于字符串常量池是在运行时常量池中，频繁的错误使用String.intern()会导致常量池溢出。
+- 运行时常量池溢出，JDK8之前运行时常量池还在方法区中，频繁的错误使用String.intern()会导致常量池溢出。
 
 ##### 2.3 栈溢出
 
@@ -67,13 +69,14 @@ java.lang.OutOfMemoryError: Direct buffer memory
 - 大文件或者产生大量文件
 - 并发太高，大量的socket
 
-## fullGc
+## fullGc（major gc）
 
-fullgc主要有以下原因导致：
+什么时候可能会触发STW的Full GC呢？ 
 
-- 手动调用System.gc()
-- 老年代空间不足
-- 永生代空间不足
+- Perm空间不足； 
+- CMS GC时出现promotion failed和concurrent mode failure（concurrent mode failure发生的原因一般是CMS正在进行，但是由于老年代空间不足，需要尽快回收老年代里面的不再被使用的对象，这时停止所有的线程，同时终止CMS，直接进行Serial Old GC）（老年代空间不足）
+-  统计得到的Young GC晋升到老年代的平均大小大于老年代的剩余空间。(老年代空间不如)
+- 主动触发Full GC（执行jmap -histo:live [pid]）或者System.gc()来避免碎片问题。
 
 其中System.gc不推荐使用，一般都会通过jvm参数**-XX:+ DisableExplicitGC**来禁止。永生代情况也比较少，基本不会发生垃圾回收。所以fullgc的调优主要关注老年代的空间使用情况。
 
@@ -84,8 +87,19 @@ fullgc主要有以下原因导致：
 - 老年代分配担保：如果一次yanggc存活对象太多，s区放不下，将会根据是否开启了允许分配担保的配置，来判断是否使用老年代的区域
 - 年龄动态判定机制：一批对象的总大小大于这块Survivor区域内存大小的50%(-XX:TargetSurvivorRatio可以指定)，那么此时大于等于这批对象年龄最大值的对象，就可以直接进入老年代。一般在minor gc后触发。
 
+**gc调优最常见的就是新生代和老年代的比例设置的不合理，导致对象过早晋升，一般可以通过jstat或者arthas等成熟工具观察jvm gc情况，如果老年代回收比例过大，则很可能发生嘞过早晋升。可适当调大新生代的大小。一般老年代调到活跃对象的3倍即可，其他的jvm内存都可以给新生代**
+
+![image-20221001230639014](https://yusheng-picgo.oss-cn-beijing.aliyuncs.com/picgo/image-20221001230639014.png)
+
+## yanggc（minor gc）
+
+适当调大新生代大小，防止对象过早晋升。
+
 ## 参考文档
 
 https://tech.meituan.com/2020/11/12/java-9-cms-gc.html
 
 https://tech.meituan.com/2017/12/29/jvm-optimize.html
+
+https://www.jianshu.com/p/4d59698030f1
+
