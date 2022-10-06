@@ -2,7 +2,7 @@ package org.arithmetic.linkedList.thread;
 
 /**
  * @author zhengrui
- * @description
+ * @description 三个线程交替打印ABC --- synchronized版
  * @date 2022-03-24 23:17
  */
 public class PrintABCUsingWaitNotify {
@@ -22,12 +22,15 @@ public class PrintABCUsingWaitNotify {
         new Thread(() -> {
             printABC.printLetter("2", 1);
         }, "B").start();
+        new Thread(() -> {
+            printABC.printLetter("3", 2);
+        }, "C").start();
     }
 
     private void printLetter(String name, int targetState) {
         for (int i = 0; i < times; i++) {
             synchronized (LOCK) {
-                while (state % 2 != targetState) {
+                while (state % 3 != targetState) {
                     try {
                         LOCK.wait();
                     } catch (InterruptedException e) {

@@ -5,7 +5,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author zhengrui
- * @description
+ * @description 三个线程交替打印ABC --- ReentrantLock版
  * @date 2022-03-24 22:23
  */
 public class ThreadPrint {
@@ -21,7 +21,7 @@ public class ThreadPrint {
         private void printLetter(String name, int targetNum) {
             for (int i = 0; i < times; ) {
                 lock.lock();
-                if (state % 2 == targetNum) {
+                if (state % 3 == targetNum) {
                     state++;
                     i++;
                     System.out.println("thread" + name + " - " + state);
@@ -33,6 +33,9 @@ public class ThreadPrint {
         public static void main(String[] args) {
             ThreadPrint loopThread = new ThreadPrint(50);
 
+            new Thread(() -> {
+                loopThread.printLetter("C", 2);
+            }, "C").start();
             new Thread(() -> {
                 loopThread.printLetter("B", 1);
             }, "B").start();
