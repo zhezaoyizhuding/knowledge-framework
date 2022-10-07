@@ -284,7 +284,7 @@ https://www.processon.com/view/link/60d865e85653bb049a4b77ff#map
 
 ## spring cloud启动流程
 
-
+![image-20221007205511295](https://yusheng-picgo.oss-cn-beijing.aliyuncs.com/picgo/image-20221007205511295.png)
 
 ## 参考文档
 
