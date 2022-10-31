@@ -1,8 +1,6 @@
 package org.arithmetic.linkedList.leetcode;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author zhengrui

@@ -1,5 +1,7 @@
 package org.arithmetic.linkedList.leetcode;
 
+import org.arithmetic.linkedList.ListNode;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,14 +11,6 @@ import java.util.Set;
  * @date 2022-04-22 16:33
  */
 public class Leetcode234 {
-
-     public static class ListNode {
-          int val;
-          ListNode next;
-          ListNode() {}
-          ListNode(int val) { this.val = val; }
-          ListNode(int val, ListNode next) { this.val = val; this.next = next; }
-     }
 
     public static boolean isPalindrome(ListNode head) {
         if(head == null) {
