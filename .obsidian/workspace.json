@@ -18,8 +18,19 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "a9dd257b66a11b09",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.1.16"
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -138,16 +149,29 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "canvas:新建白板": false,
       "switcher:打开快速切换": false,
       "graph:查看关系图谱": false,
-      "canvas:Create new canvas": false,
       "daily-notes:打开/创建今天的日记": false,
       "templates:插入模板": false,
       "command-palette:打开命令面板": false
     }
   },
-  "active": "4a95f72e5b8d1abf",
+  "active": "a9dd257b66a11b09",
   "lastOpenFiles": [
+    "面经/项目/收费系统~.md",
+    "面经/项目/收费系统.md",
+    "面经/项目/Untitled.md",
+    "arithmetic/target/classes/org/arithmetic/linkedList/leetcode/最小覆盖子串.class",
+    "arithmetic/target/classes/org/arithmetic/linkedList/thread/ThreadPrint.class",
+    "arithmetic/target/classes/org/arithmetic/linkedList/thread/PrintRunnable.class",
+    "arithmetic/target/classes/org/arithmetic/linkedList/thread/ThreeThread.class",
+    "arithmetic/target/classes/org/arithmetic/linkedList/thread/ThreadPrint2.class",
+    "arithmetic/target/classes/org/arithmetic/linkedList/thread/ThreadPrint2$Task.class",
+    "arithmetic/target/classes/org/arithmetic/linkedList/thread/LetterPrint.class",
+    "arithmetic/target/classes/org/arithmetic/linkedList/thread/LRUForLinkedList.class",
+    "arithmetic/target/classes/org/arithmetic/linkedList/thread/LRUCache.class",
+    "arithmetic/target/classes/org/arithmetic/linkedList/thread/LRUCache$DLinkedNode.class",
     "系统设计/计费清结算/橙心清结算/橙心-计费系统核心业务流程.md",
     "脑图/Java体系.md",
     "系统设计/计费清结算/业务单据模型.md"
