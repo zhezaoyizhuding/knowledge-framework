@@ -28,9 +28,19 @@
                 "currentVersion": "1.1.16"
               }
             }
+          },
+          {
+            "id": "49282eaffe05b506",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.2.8"
+              }
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -73,6 +83,14 @@
             "type": "leaf",
             "state": {
               "type": "starred",
+              "state": {}
+            }
+          },
+          {
+            "id": "9e5eca12075cee8e",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
               "state": {}
             }
           }
@@ -157,18 +175,23 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "a9dd257b66a11b09",
+  "active": "49282eaffe05b506",
   "lastOpenFiles": [
+    "系统设计/财务/财务基础~.md",
+    "系统设计/计费清结算/消费金融计费.md",
+    "系统设计/计费清结算/Untitled.md",
+    "系统设计/支付/收银台.md",
+    "系统设计/支付/Untitled.md",
+    "系统设计/财务/会计引擎.md",
+    "系统设计/财务/Untitled.md",
+    "系统设计/计费清结算/业务单据模型~.md",
     "性能调优/jvm大小设置~.md",
     "性能调优/jvm大小设置.md",
     "性能调优/Untitled.md",
     "系统设计/计费清结算/整体流程.md",
-    "系统设计/计费清结算/Untitled.md",
     "系统设计/支付/支付架构.md",
-    "系统设计/支付/Untitled.md",
     "系统设计/支付/账户系统设计~.md",
     "系统设计/财务/财务基础.md",
-    "系统设计/财务/Untitled.md",
     "系统设计/财务",
     "系统设计/Untitled Folder",
     "系统设计/交易/交易结算.md",
