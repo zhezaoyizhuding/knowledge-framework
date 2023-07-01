@@ -4,43 +4,22 @@
     "type": "split",
     "children": [
       {
-        "id": "1c0e95a81bf2ec58",
+        "id": "a43ed636307bf1ee",
         "type": "tabs",
         "children": [
           {
-            "id": "4a95f72e5b8d1abf",
+            "id": "5a9ce97e15e43911",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "系统设计/计费清结算/橙心清结算/橙心-结算现状分析20201021.md",
-                "mode": "preview",
+                "file": "分布式系统/分布式发号器.md",
+                "mode": "source",
                 "source": false
               }
             }
-          },
-          {
-            "id": "a9dd257b66a11b09",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.1.16"
-              }
-            }
-          },
-          {
-            "id": "49282eaffe05b506",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.2.8"
-              }
-            }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -114,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "系统设计/计费清结算/橙心清结算/橙心-结算现状分析20201021.md",
+                "file": "分布式系统/分布式发号器.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -131,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "系统设计/计费清结算/橙心清结算/橙心-结算现状分析20201021.md",
+                "file": "分布式系统/分布式发号器.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -154,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "系统设计/计费清结算/橙心清结算/橙心-结算现状分析20201021.md"
+                "file": "分布式系统/分布式发号器.md"
               }
             }
           }
@@ -175,42 +154,44 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "49282eaffe05b506",
+  "active": "5a9ce97e15e43911",
   "lastOpenFiles": [
-    "系统设计/财务/财务基础~.md",
-    "系统设计/计费清结算/消费金融计费.md",
+    "Java基础/JVM/Java虚拟机（一）-- 内存管理.md",
+    "Java基础/JVM/java虚拟机（二）-类的加载与执行.md",
+    "Java基础/JVM/Java虚拟机中的优化.md",
+    "Java基础/JVM/内存模型概述.md",
+    "Java基础/JVM/JVM.jpg",
+    "分布式系统/分布式发号器.md",
+    "脑图/Java体系.md",
+    "规划/2023.md",
+    "系统设计/营销/1.兑换系统设计.md",
+    "系统设计/交易结算/整体流程.md",
+    "系统设计/交易结算/交易/交易结算.md",
+    "系统设计/交易结算/清结算",
+    "系统设计/交易结算/财务/会计引擎.md",
+    "系统设计/交易结算/财务/财务基础.md",
+    "系统设计/设计模式.md",
+    "系统设计/日志监控规范梳理.md",
+    "系统设计/技术方案模板.md",
+    "系统设计/概论.md",
+    "系统设计/交易结算/清结算/对账核算.md",
     "系统设计/计费清结算/Untitled.md",
-    "系统设计/支付/收银台.md",
+    "系统设计/财务/财务基础~.md",
+    "系统设计/交易结算/清结算/消费金融计费.md",
+    "系统设计/交易结算/支付/收银台.md",
     "系统设计/支付/Untitled.md",
-    "系统设计/财务/会计引擎.md",
     "系统设计/财务/Untitled.md",
     "系统设计/计费清结算/业务单据模型~.md",
     "性能调优/jvm大小设置~.md",
     "性能调优/jvm大小设置.md",
-    "性能调优/Untitled.md",
-    "系统设计/计费清结算/整体流程.md",
-    "系统设计/支付/支付架构.md",
-    "系统设计/支付/账户系统设计~.md",
-    "系统设计/财务/财务基础.md",
-    "系统设计/财务",
+    "系统设计/交易结算/财务",
     "系统设计/Untitled Folder",
-    "系统设计/交易/交易结算.md",
-    "系统设计/交易/Untitled.md",
-    "系统设计/交易",
-    "系统设计/支付/账户系统设计.md",
-    "系统设计/支付",
-    "系统设计/计费清结算/业财一体化探索.md",
-    "面经/项目/收费系统~.md",
-    "面经/项目/收费系统.md",
-    "面经/项目/Untitled.md",
+    "系统设计/交易结算/交易",
+    "系统设计/交易结算/支付",
     "arithmetic/target/classes/org/arithmetic/linkedList/leetcode/最小覆盖子串.class",
     "arithmetic/target/classes/org/arithmetic/linkedList/thread/ThreadPrint.class",
     "arithmetic/target/classes/org/arithmetic/linkedList/thread/PrintRunnable.class",
     "arithmetic/target/classes/org/arithmetic/linkedList/thread/ThreeThread.class",
-    "arithmetic/target/classes/org/arithmetic/linkedList/thread/ThreadPrint2.class",
-    "arithmetic/target/classes/org/arithmetic/linkedList/thread/ThreadPrint2$Task.class",
-    "系统设计/计费清结算/橙心清结算/橙心-计费系统核心业务流程.md",
-    "脑图/Java体系.md",
-    "系统设计/计费清结算/业务单据模型.md"
+    "arithmetic/target/classes/org/arithmetic/linkedList/thread/ThreadPrint2.class"
   ]
 }
