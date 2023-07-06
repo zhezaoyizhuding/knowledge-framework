@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "分布式系统/分布式发号器.md",
+                "file": "计算机网络/网络IO模型.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "分布式系统/分布式发号器.md",
+                "file": "计算机网络/网络IO模型.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "分布式系统/分布式发号器.md",
+                "file": "计算机网络/网络IO模型.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "分布式系统/分布式发号器.md"
+                "file": "计算机网络/网络IO模型.md"
               }
             }
           }
@@ -156,12 +156,26 @@
   },
   "active": "5a9ce97e15e43911",
   "lastOpenFiles": [
+    "计算机网络/网络IO模型~.md",
+    "Users/zhengrui/Library/Application.md",
+    "计算机网络/网络IO模型.md",
+    "Users/zhengrui/Library",
+    "Users/zhengrui",
+    "Users",
+    "计算机网络/网络基础.md",
+    "基础框架/spring/spring.md",
+    "分布式系统/zookeeper/概述.md",
+    "分布式系统/shardingSphere/概述.md",
+    "分布式系统/rocketMQ/概述.md",
+    "分布式系统/redis/redis-tree.png",
+    "分布式系统/redis/缓存设计与优化.md",
+    "分布式系统/redis/概述.md",
+    "分布式系统/分布式发号器.md",
     "Java基础/JVM/Java虚拟机（一）-- 内存管理.md",
     "Java基础/JVM/java虚拟机（二）-类的加载与执行.md",
     "Java基础/JVM/Java虚拟机中的优化.md",
     "Java基础/JVM/内存模型概述.md",
     "Java基础/JVM/JVM.jpg",
-    "分布式系统/分布式发号器.md",
     "脑图/Java体系.md",
     "规划/2023.md",
     "系统设计/营销/1.兑换系统设计.md",
@@ -174,24 +188,11 @@
     "系统设计/日志监控规范梳理.md",
     "系统设计/技术方案模板.md",
     "系统设计/概论.md",
-    "系统设计/交易结算/清结算/对账核算.md",
-    "系统设计/计费清结算/Untitled.md",
-    "系统设计/财务/财务基础~.md",
-    "系统设计/交易结算/清结算/消费金融计费.md",
-    "系统设计/交易结算/支付/收银台.md",
-    "系统设计/支付/Untitled.md",
-    "系统设计/财务/Untitled.md",
-    "系统设计/计费清结算/业务单据模型~.md",
-    "性能调优/jvm大小设置~.md",
-    "性能调优/jvm大小设置.md",
     "系统设计/交易结算/财务",
     "系统设计/Untitled Folder",
     "系统设计/交易结算/交易",
     "系统设计/交易结算/支付",
     "arithmetic/target/classes/org/arithmetic/linkedList/leetcode/最小覆盖子串.class",
-    "arithmetic/target/classes/org/arithmetic/linkedList/thread/ThreadPrint.class",
-    "arithmetic/target/classes/org/arithmetic/linkedList/thread/PrintRunnable.class",
-    "arithmetic/target/classes/org/arithmetic/linkedList/thread/ThreeThread.class",
-    "arithmetic/target/classes/org/arithmetic/linkedList/thread/ThreadPrint2.class"
+    "arithmetic/target/classes/org/arithmetic/linkedList/thread/ThreadPrint.class"
   ]
 }
