@@ -4,7 +4,6 @@
 
 - [1. 简介](https://java.isture.com/java/jvm/java-jvm-optimization-size.html#_1-简介)
 - [2. 推荐配置原则：](https://java.isture.com/java/jvm/java-jvm-optimization-size.html#_2-推荐配置原则)
-- [3. 暴力设置](https://java.isture.com/java/jvm/java-jvm-optimization-size.html#_3-暴力设置)
 - [参考文章](https://java.isture.com/java/jvm/java-jvm-optimization-size.html#参考文章)
 
 ## [#](https://java.isture.com/java/jvm/java-jvm-optimization-size.html#_1-简介)1. 简介
@@ -21,23 +20,17 @@
 
 1. 应用程序运行时，计算
 
-   老年代存活对象的占用空间大小X。
+   FullGC后老年代存活对象的占用空间大小X（即活跃对象）。
 
    1. 程序整个堆大小（Xmx和Xms）设置为X的3~4倍；
    2. 永久代PermSize和MaxPermSize设置为X的1.2~1.5倍。
-   3. 年轻代Xmn的设置为X的11.5倍。老年代内存大小设置为X的23倍。
+   3. 年轻代Xmn的设置为X的1~1.5倍。老年代内存大小设置为X的2~3倍。
 
 2. JDK官方建议年轻代占整个堆大小空间的3/8左右。
 
 3. 完成一次Full GC后，应该释放出70%的堆空间（30%的空间仍然占用）。
 
 4. 设置JVM 初始堆内存-Xms和最大堆内-Xmx相同，**以避免每次垃圾回收完成后JVM重新分配内存。**
-
-## [#](https://java.isture.com/java/jvm/java-jvm-optimization-size.html#_3-暴力设置)3. 暴力设置
-
-若依和IBM等堆大小都设置为512M, 如有额外需求，才根据上面原则进行调整
-
-> 对于大多数环境而言，最大 Java 堆大小为 512 兆字节（如上图所示）已足够。
 
 ## 参考文章
 

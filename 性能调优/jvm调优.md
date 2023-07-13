@@ -24,7 +24,7 @@ java.lang.OutOfMemoryError: Java heap space
 
 解决方案就是dump下内存快照，通过jprofiler等工具分析堆栈信息，找出占用内存较多的对象，在聚焦到代码里分析。
 
-- 短时间内从DB或者其他地方捞出大量对象。常见于导出、批量查询等场景，未做数量限制
+- 短时间内从DB或者其他地方捞出大量对象。常见于导出、批量查询、无where条件等场景，未做数量限制
 
 限制查询数量，分批查询
 
@@ -74,8 +74,8 @@ java.lang.OutOfMemoryError: Direct buffer memory
 什么时候可能会触发STW的Full GC呢？ 
 
 - Perm空间不足； 
-- CMS GC时出现promotion failed和concurrent mode failure（concurrent mode failure发生的原因一般是CMS正在进行，但是由于老年代空间不足，需要尽快回收老年代里面的不再被使用的对象，这时停止所有的线程，同时终止CMS，直接进行Serial Old GC）（老年代空间不足）
--  统计得到的Young GC晋升到老年代的平均大小大于老年代的剩余空间。(老年代空间不如)
+- CMS GC时出现promotion failed和concurrent mode failure（concurrent mode failure发生的原因一般是CMS正在进行gc，但是由于老年代空间不足，需要尽快回收老年代里面的不再被使用的对象，这时停止所有的线程，同时终止CMS，直接进行Serial Old GC）（老年代空间不足）
+-  统计得到的Young GC晋升到老年代的平均大小大于老年代的剩余空间，或者在未配置“-XX:-HandlePromotionFailure”的情况下年轻代所有对象之和大于老年代剩余可用空间。(老年代空间不足)
 - 主动触发Full GC（执行jmap -histo:live [pid]）或者System.gc()来避免碎片问题。
 
 其中System.gc不推荐使用，一般都会通过jvm参数**-XX:+ DisableExplicitGC**来禁止。永生代情况也比较少，基本不会发生垃圾回收。所以fullgc的调优主要关注老年代的空间使用情况。
@@ -94,6 +94,16 @@ java.lang.OutOfMemoryError: Direct buffer memory
 ## yanggc（minor gc）
 
 适当调大新生代大小，防止对象过早晋升。
+
+## 火焰图
+
+![image-20230713161016897](https://yusheng-picgo.oss-cn-beijing.aliyuncs.com/picgo/image-20230713161016897.png)
+
+https://www.infoq.cn/article/a8kmnxdhbwmzxzsytlga
+
+https://www.ruanyifeng.com/blog/2017/09/flame-graph.html
+
+https://zhuanlan.zhihu.com/p/402188023
 
 ## 参考文档
 
