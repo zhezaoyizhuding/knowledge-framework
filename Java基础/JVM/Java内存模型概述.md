@@ -8,7 +8,11 @@ tags:
 
 
 
-##### 缓存一致性
+##### CPU缓存一致性
+
+https://developer.aliyun.com/article/1081578
+
+https://mdnice.com/writing/2eea8012de754171adf2f7a90acace8f
 
 ##### 顺序一致性
 

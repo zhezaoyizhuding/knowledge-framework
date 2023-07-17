@@ -275,8 +275,6 @@ select(int nfds, fd_set *r, fd_set *w, fd_set *e, struct timeval *timeout)
 
 **基本原理：** select 函数监视的文件描述符分3类，分别放在writefds、readfds、和exceptfds三个集合中。调用后select函数会阻塞，直到有描述符就绪（有数据 可读、可写、或者有except），或者超时（timeout指定等待时间，如果立即返回设为null即可），函数返回。当select函数返回后，可以通过遍历fdset，来找到就绪的描述符。
 
-基本流程，如图所示：![img](http://www.loujunkai.club/network/select.jpg)
-
 select目前几乎在所有的平台上支持，其**良好跨平台支持**也是它的一个优点。select的一个缺点在于单个进程能够监视的文件描述符的数量存在最大限制，在Linux上一般为**1024**，可以通过修改宏定义甚至重新编译内核的方式提升这一限制，但是这样也会造成效率的降低。
 
 select本质上是通过设置或者检查存放fd标志位的数据结构来进行下一步处理。这样所带来的**缺点**是：

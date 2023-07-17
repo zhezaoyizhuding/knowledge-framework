@@ -10,7 +10,7 @@ spring IOC主要分为两块，一个是创建 Bean 容器，一个是初始化 
 
 ###### Spring IoC容器的加载过程
 
-1. 实例化化容器：AnnotationConfigApplicationContext（类/注解/xml各不同）
+1. 实例化容器：AnnotationConfigApplicationContext（类/注解/xml各不同）
 
 2. 实例化工厂：DefaultListableBeanFactory
 
@@ -294,6 +294,10 @@ https://www.processon.com/view/link/60d865e85653bb049a4b77ff#map
 
 - `Spring Cloud`的`BootstrapApplicationListener`监听`ApplicationEnvironmentPreparedEvent`事件，在监听到事件时开启一个新的`ApplicationContext`容器，我们可以称这个`ApplicationContext`容器为`Spring Cloud`的`Bootstrap`容器。Bootstrap`容器被用来注册`spring.factories`配置文件中配置的所有`BootstrapConfiguration`，并在`Bootstrap`容器初始化完成后将其`Bean`工厂作为原本`Spring Boot`启动的`ApplicationContext`容器的`Bean工厂的父工厂。在创建Bootstrap容器之前会加载bootstrap.[yaml｜props]中的配置，并写入到自己的Environment中，同时会将Bootstrap Conxtent的Enviroment合并到ApplicationContext的Enviroment中。
 - 创建完Bootstrap Conxtent后，会重走一遍`Spring Boot`应用的启动流程。而原来`main`方法中调用`SpringApplication`的`run`方法启动`ApplicationContext`容器则会卡在环境准备阶段，等待`Spring Cloud`为其提供父工厂。然后通过判断`Environment`中是否存在`bootstrap`这个`PropertySource`辨别当前容器是否是`Bootstrap`容器，以解决无限监听ApplicationEnvironmentPreparedEvent事件启动新容器的问题。
+
+## resource和autowired的区别
+
+
 
 ## 参考文档
 
