@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "分布式系统/分布式事务.md",
+                "file": "规划/2023.md",
                 "mode": "source",
                 "source": false
               }
@@ -106,7 +106,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "分布式系统/分布式事务.md",
+                "file": "规划/2023.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -123,7 +123,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "分布式系统/分布式事务.md",
+                "file": "规划/2023.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -146,7 +146,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "分布式系统/分布式事务.md"
+                "file": "规划/2023.md"
               }
             }
           }
@@ -170,6 +170,8 @@
   },
   "active": "49fc77f4cc76287a",
   "lastOpenFiles": [
+    "规划/2024.md",
+    "分布式系统/分布式事务.md",
     "规划/2023~.md",
     "README.md",
     "系统设计/设计模式.md",
@@ -205,8 +207,6 @@
     "脑图/Java体系.md",
     "规划/2023.md",
     "系统设计/营销/1.兑换系统设计.md",
-    "系统设计/交易结算/整体流程.md",
-    "系统设计/交易结算/交易/交易结算.md",
-    "系统设计/交易结算/财务/会计引擎.md"
+    "系统设计/交易结算/整体流程.md"
   ]
 }
