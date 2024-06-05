@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "49fc77f4cc76287a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "分布式系统/分布式事务.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -93,7 +106,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "计算机网络/网络IO模型.md",
+                "file": "分布式系统/分布式事务.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +123,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "计算机网络/网络IO模型.md",
+                "file": "分布式系统/分布式事务.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +146,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "计算机网络/网络IO模型.md"
+                "file": "分布式系统/分布式事务.md"
               }
             }
           }
@@ -151,25 +164,30 @@
       "graph:查看关系图谱": false,
       "daily-notes:打开/创建今天的日记": false,
       "templates:插入模板": false,
-      "command-palette:打开命令面板": false
+      "command-palette:打开命令面板": false,
+      "obsidian-excalidraw-plugin:新建绘图文件": false
     }
   },
-  "active": "5a9ce97e15e43911",
+  "active": "49fc77f4cc76287a",
   "lastOpenFiles": [
-    "Excalidraw/Drawing 2024-05-30 10.07.10.excalidraw.md",
+    "规划/2023~.md",
+    "README.md",
+    "系统设计/设计模式.md",
+    "Excalidraw/Drawing 2024-05-30 14.38.49.excalidraw.md",
+    "Excalidraw/fonts/YaoRuanBiShouXieTi/字由客户端.url",
+    "Excalidraw/fonts/YaoRuanBiShouXieTi/Muyao-Softbrush-2.ttf",
+    "Excalidraw/fonts/YaoRuanBiShouXieTi",
+    "Excalidraw/fonts/YaoRuanBiShouXieTi.zip",
+    "Excalidraw/fonts",
     "计算机网络/网络IO模型.md",
+    "Excalidraw",
+    "Excalidraw/Drawing 2024-05-30 10.07.10.excalidraw.md",
     "Excalidraw/artem-s-icons.excalidrawlib",
     "Excalidraw/YaoRuanBiShouXieTi/字由客户端.url",
     "Excalidraw/YaoRuanBiShouXieTi/Muyao-Softbrush-2.ttf",
     "Excalidraw/YaoRuanBiShouXieTi",
-    "Excalidraw/golang-gophers.excalidrawlib",
-    "Excalidraw/YaoRuanBiShouXieTi.zip",
-    "Excalidraw",
     "计算机网络/网络IO模型~.md",
     "Users/zhengrui/Library/Application.md",
-    "Users/zhengrui/Library",
-    "Users/zhengrui",
-    "Users",
     "计算机网络/网络基础.md",
     "基础框架/spring/spring.md",
     "分布式系统/zookeeper/概述.md",
@@ -189,9 +207,6 @@
     "系统设计/营销/1.兑换系统设计.md",
     "系统设计/交易结算/整体流程.md",
     "系统设计/交易结算/交易/交易结算.md",
-    "系统设计/交易结算/财务/会计引擎.md",
-    "系统设计/交易结算/财务/财务基础.md",
-    "系统设计/设计模式.md",
-    "系统设计/日志监控规范梳理.md"
+    "系统设计/交易结算/财务/会计引擎.md"
   ]
 }
