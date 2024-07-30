@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "规划/2023.md",
+                "file": "README.md",
                 "mode": "source",
                 "source": false
               }
@@ -90,7 +90,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 208.5
   },
   "right": {
     "id": "ad37e25ce79abd7b",
@@ -106,7 +106,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "规划/2023.md",
+                "file": "README.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -123,7 +123,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "规划/2023.md",
+                "file": "README.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -146,7 +146,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "规划/2023.md"
+                "file": "README.md"
               }
             }
           }
@@ -168,8 +168,9 @@
       "obsidian-excalidraw-plugin:新建绘图文件": false
     }
   },
-  "active": "49fc77f4cc76287a",
+  "active": "9c26f3d5a32f557f",
   "lastOpenFiles": [
+    "规划/2023.md",
     "规划/2024.md",
     "分布式系统/分布式事务.md",
     "规划/2023~.md",
@@ -205,7 +206,6 @@
     "Java基础/JVM/内存模型概述.md",
     "Java基础/JVM/JVM.jpg",
     "脑图/Java体系.md",
-    "规划/2023.md",
     "系统设计/营销/1.兑换系统设计.md",
     "系统设计/交易结算/整体流程.md"
   ]
